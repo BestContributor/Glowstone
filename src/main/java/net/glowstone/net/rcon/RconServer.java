@@ -4,6 +4,10 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -19,16 +23,26 @@ import java.net.SocketAddress;
 public class RconServer {
 
     private final GlowServer server;
-    private final EventLoopGroup bossGroup = new NioEventLoopGroup();
-    private final EventLoopGroup workerGroup = new NioEventLoopGroup();
+
     private ServerBootstrap bootstrap = new ServerBootstrap();
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workerGroup;
 
     public RconServer(GlowServer server, final String password) {
         this.server = server;
-
+        Class<? extends ServerChannel> channel;
+        if (Epoll.isAvailable()) {
+            bossGroup = new EpollEventLoopGroup();
+            workerGroup = new EpollEventLoopGroup();
+            channel = EpollServerSocketChannel.class;
+        } else {
+            bossGroup = new NioEventLoopGroup();
+            workerGroup = new NioEventLoopGroup();
+            channel = NioServerSocketChannel.class;
+        }
         bootstrap
                 .group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
+                .channel(channel)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch) throws Exception {
