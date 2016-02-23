@@ -3,7 +3,11 @@ package net.glowstone.net.query;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollDatagramChannel;
+import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import net.glowstone.GlowServer;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -23,7 +27,7 @@ public class QueryServer {
     /**
      * The {@link EventLoopGroup} used by the query server.
      */
-    private EventLoopGroup group = new NioEventLoopGroup();
+    private EventLoopGroup group;
 
     /**
      * The {@link Bootstrap} used by netty to instantiate the query server.
@@ -53,9 +57,18 @@ public class QueryServer {
     public QueryServer(GlowServer server, boolean showPlugins) {
         this.server = server;
 
+        Class<? extends DatagramChannel> channel;
+        if (Epoll.isAvailable()) {
+            group = new EpollEventLoopGroup();
+            channel = EpollDatagramChannel.class;
+        } else {
+            group = new NioEventLoopGroup();
+            channel = NioDatagramChannel.class;
+        }
+
         bootstrap
                 .group(group)
-                .channel(NioDatagramChannel.class)
+                .channel(channel)
                 .handler(new QueryHandler(this, showPlugins));
     }
 
