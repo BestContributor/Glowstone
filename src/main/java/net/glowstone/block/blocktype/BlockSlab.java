@@ -14,6 +14,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class BlockSlab extends BlockType {
 
@@ -84,6 +85,6 @@ public class BlockSlab extends BlockType {
 
     @Override
     public Collection<ItemStack> getMinedDrops(GlowBlock block) {
-        return Arrays.asList(new ItemStack(block.getType(), 1, (short) (block.getData() % 8)));
+        return Collections.singletonList(new ItemStack(block.getType(), 1, (short) (block.getData() % 8)));
     }
 }

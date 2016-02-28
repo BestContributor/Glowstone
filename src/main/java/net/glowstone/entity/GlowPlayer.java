@@ -2220,7 +2220,7 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
 
         hiddenEntities.add(player.getUniqueId());
         if (knownEntities.remove(player)) {
-            session.send(new DestroyEntitiesMessage(Arrays.asList(player.getEntityId())));
+            session.send(new DestroyEntitiesMessage(Collections.singletonList(player.getEntityId())));
         }
         session.send(UserListItemMessage.removeOne(player.getUniqueId()));
     }

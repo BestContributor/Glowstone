@@ -100,6 +100,6 @@ public class BlockSugarCane extends BlockNeedsAttached {
 
     @Override
     public Collection<ItemStack> getDrops(GlowBlock me, ItemStack tool) {
-        return Collections.unmodifiableList(Arrays.asList(new ItemStack(Material.SUGAR_CANE)));
+        return Collections.unmodifiableList(Collections.singletonList(new ItemStack(Material.SUGAR_CANE)));
     }
 }

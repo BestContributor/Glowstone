@@ -27,6 +27,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.util.EulerAngle;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GlowArmorStand extends GlowLivingEntity implements ArmorStand {
@@ -312,7 +313,7 @@ public class GlowArmorStand extends GlowLivingEntity implements ArmorStand {
             }
         }
         if (needsKill) {
-            messages.add(new DestroyEntitiesMessage(Arrays.asList(this.id)));
+            messages.add(new DestroyEntitiesMessage(Collections.singletonList(this.id)));
         }
         return messages;
     }

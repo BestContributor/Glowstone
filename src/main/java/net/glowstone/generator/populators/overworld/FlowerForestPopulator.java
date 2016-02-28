@@ -31,7 +31,7 @@ public class FlowerForestPopulator extends ForestPopulator {
 
     @Override
     public Collection<Biome> getBiomes() {
-        return Collections.unmodifiableList(Arrays.asList(Biome.FLOWER_FOREST));
+        return Collections.unmodifiableList(Collections.singletonList(Biome.FLOWER_FOREST));
     }
 
     @Override

@@ -25,7 +25,7 @@ public class BlockFlowerPot extends BlockType {
 
     @Override
     public Collection<ItemStack> getDrops(GlowBlock block, ItemStack tool) {
-        List<ItemStack> drops = Arrays.asList(new ItemStack(Material.FLOWER_POT));
+        List<ItemStack> drops = Collections.singletonList(new ItemStack(Material.FLOWER_POT));
         GlowBlockState state = block.getState();
 
         if (state instanceof GlowFlowerPot) {

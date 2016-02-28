@@ -17,10 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.material.Tree;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class BlockSapling extends BlockNeedsAttached implements IBlockGrowable {
 
@@ -160,7 +157,7 @@ public class BlockSapling extends BlockNeedsAttached implements IBlockGrowable {
 
     @Override
     public Collection<ItemStack> getDrops(GlowBlock block, ItemStack tool) {
-        return Arrays.asList(new ItemStack(Material.SAPLING, 1, (short) (block.getData() % 8)));
+        return Collections.singletonList(new ItemStack(Material.SAPLING, 1, (short) (block.getData() % 8)));
     }
 
     @Override

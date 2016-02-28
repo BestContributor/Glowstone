@@ -15,6 +15,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class BlockVine extends BlockClimbable {
 
@@ -96,7 +97,7 @@ public class BlockVine extends BlockClimbable {
     @Override
     public Collection<ItemStack> getDrops(GlowBlock block, ItemStack tool) {
         if (tool != null && tool.getType() == Material.SHEARS)
-            return Arrays.asList(new ItemStack(Material.VINE));
+            return Collections.singletonList(new ItemStack(Material.VINE));
 
         return BlockDropless.EMPTY_STACK;
     }

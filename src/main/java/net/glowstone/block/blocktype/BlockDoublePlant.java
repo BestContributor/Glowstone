@@ -37,7 +37,7 @@ public class BlockDoublePlant extends BlockNeedsAttached implements IBlockGrowab
         if (data instanceof DoublePlant) {
             final DoublePlantSpecies species = ((DoublePlant) data).getSpecies();
             if (species != DoublePlantSpecies.DOUBLE_TALLGRASS && species != DoublePlantSpecies.LARGE_FERN && species != DoublePlantSpecies.PLANT_APEX) {
-                return Collections.unmodifiableList(Arrays.asList(data.toItemStack(1)));
+                return Collections.unmodifiableList(Collections.singletonList(data.toItemStack(1)));
             }
         } else {
             warnMaterialData(DoublePlant.class, data);

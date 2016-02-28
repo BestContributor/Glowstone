@@ -52,7 +52,7 @@ public class NbtPlayerDataService implements PlayerDataService {
         // list files in directory
         File[] files = playerDir.listFiles();
         if (files == null) {
-            return Arrays.asList();
+            return Collections.emptyList();
         }
 
         List<OfflinePlayer> result = new ArrayList<>(files.length);

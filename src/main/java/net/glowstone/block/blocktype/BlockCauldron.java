@@ -14,13 +14,10 @@ import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.util.Vector;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlockCauldron extends BlockNeedsTool {
-    private static final Collection<ItemStack> DROP = Arrays.asList(new ItemStack(Material.CAULDRON_ITEM));
+    private static final Collection<ItemStack> DROP = Collections.singletonList(new ItemStack(Material.CAULDRON_ITEM));
 
     @Override
     public boolean blockInteract(GlowPlayer player, GlowBlock block, BlockFace face, Vector clickedLoc) {

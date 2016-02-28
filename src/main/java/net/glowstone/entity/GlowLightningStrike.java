@@ -22,6 +22,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -99,12 +100,12 @@ public class GlowLightningStrike extends GlowWeather implements LightningStrike 
         int x = Position.getIntX(location);
         int y = Position.getIntY(location);
         int z = Position.getIntZ(location);
-        return Arrays.<Message>asList(new SpawnLightningStrikeMessage(id, x, y, z));
+        return Collections.<Message>singletonList(new SpawnLightningStrikeMessage(id, x, y, z));
     }
 
     @Override
     public List<Message> createUpdateMessage() {
-        return Arrays.asList();
+        return Collections.emptyList();
     }
 
     @Override

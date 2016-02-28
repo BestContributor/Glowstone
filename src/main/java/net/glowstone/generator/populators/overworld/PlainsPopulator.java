@@ -34,7 +34,7 @@ public class PlainsPopulator extends BiomePopulator {
 
     @Override
     public Collection<Biome> getBiomes() {
-        return Collections.unmodifiableList(Arrays.asList(Biome.PLAINS));
+        return Collections.unmodifiableList(Collections.singletonList(Biome.PLAINS));
     }
 
     @Override

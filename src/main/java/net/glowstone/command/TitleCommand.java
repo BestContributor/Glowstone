@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class TitleCommand extends BukkitCommand {
 
@@ -19,7 +20,7 @@ public class TitleCommand extends BukkitCommand {
         super("title");
         this.description = "Sends a title to the specified player(s)";
         this.usageMessage = "/title <player> <title|subtitle|clear|reset|times> ...";
-        this.setAliases(Arrays.<String>asList());
+        this.setAliases(Collections.emptyList());
         this.setPermission("glowstone.command.title");
     }
 

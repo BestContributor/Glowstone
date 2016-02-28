@@ -13,6 +13,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 public class BlockStairs extends BlockType {
 
@@ -45,7 +46,7 @@ public class BlockStairs extends BlockType {
 
     @Override
     public Collection<ItemStack> getMinedDrops(GlowBlock block) {
-        return Arrays.asList(new ItemStack(block.getType()));
+        return Collections.singletonList(new ItemStack(block.getType()));
     }
 
     private boolean isWoodenStair(Material type) {

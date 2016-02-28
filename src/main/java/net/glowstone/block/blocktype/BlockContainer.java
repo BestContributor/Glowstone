@@ -11,6 +11,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 
 /**
@@ -67,7 +68,7 @@ public class BlockContainer extends BlockType {
      */
     protected Collection<ItemStack> getBlockDrops(GlowBlock block) {
         if (drops == null) {
-            return Arrays.asList(new ItemStack(block.getType()));
+            return Collections.singletonList(new ItemStack(block.getType()));
         } else {
             return drops;
         }
