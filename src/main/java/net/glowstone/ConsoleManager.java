@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.*;
 import java.util.logging.Formatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A meta-class to handle all logging and input-related console improvements.
@@ -172,6 +174,7 @@ public final class ConsoleManager {
     }
 
     private static class RotatingFileHandler extends StreamHandler {
+        private static final Pattern FILE_NAME_PATTERN = Pattern.compile("%D", Pattern.LITERAL);
         private final SimpleDateFormat dateFormat;
         private final String template;
         private final boolean rotate;
@@ -206,7 +209,7 @@ public final class ConsoleManager {
         }
 
         private String calculateFilename() {
-            return template.replace("%D", dateFormat.format(new Date()));
+            return FILE_NAME_PATTERN.matcher(template).replaceAll(Matcher.quoteReplacement(dateFormat.format(new Date())));
         }
 
         @Override

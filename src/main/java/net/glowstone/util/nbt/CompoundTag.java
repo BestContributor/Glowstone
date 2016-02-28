@@ -4,6 +4,7 @@ import org.apache.commons.lang3.Validate;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
  */
 public final class CompoundTag extends Tag<Map<String, Tag>> {
 
+    private static final Pattern BLDR_PATTERN = Pattern.compile("\n");
     /**
      * The value.
      */
@@ -32,7 +34,7 @@ public final class CompoundTag extends Tag<Map<String, Tag>> {
     protected void valueToString(StringBuilder bldr) {
         bldr.append(value.size()).append(" entries\n{\n");
         for (Map.Entry<String, Tag> entry : value.entrySet()) {
-            bldr.append("    ").append(entry.getKey()).append(": ").append(entry.getValue().toString().replaceAll("\n", "\n    ")).append("\n");
+            bldr.append("    ").append(entry.getKey()).append(": ").append( BLDR_PATTERN.matcher(entry.getValue().toString()).replaceAll("\n    ")).append("\n");
         }
         bldr.append("}");
     }

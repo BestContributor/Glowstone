@@ -2,12 +2,14 @@ package net.glowstone.util.nbt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * The {@code TAG_List} tag.
  */
 final class ListTag<T extends Tag> extends Tag<List<T>> {
 
+    private static final Pattern BLDR_PATTERN = Pattern.compile("\n");
     /**
      * The type of entries within this list.
      */
@@ -55,7 +57,7 @@ final class ListTag<T extends Tag> extends Tag<List<T>> {
     protected void valueToString(StringBuilder bldr) {
         bldr.append(value.size()).append(" entries of type ").append(type.getName()).append("\n{\n");
         for (T elem : value) {
-            bldr.append("    ").append(elem.toString().replaceAll("\n", "\n    ")).append("\n");
+            bldr.append("    ").append(BLDR_PATTERN.matcher(elem.toString()).replaceAll("\n    ")).append("\n");
         }
         bldr.append("}");
     }

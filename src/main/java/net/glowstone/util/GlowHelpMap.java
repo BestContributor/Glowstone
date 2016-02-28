@@ -167,14 +167,14 @@ public final class GlowHelpMap implements HelpMap {
             }
 
             // Register a topic
-            for (Class<?> c : topicFactoryMap.keySet()) {
-                if (c.isAssignableFrom(command.getClass())) {
-                    HelpTopic t = topicFactoryMap.get(c).createTopic(command);
+            for (Map.Entry<Class, HelpTopicFactory<Command>> entry : topicFactoryMap.entrySet()) {
+                if (entry.getKey().isAssignableFrom(command.getClass())) {
+                    HelpTopic t = entry.getValue().createTopic(command);
                     if (t != null) addCommandTopic(t);
                     continue outer;
                 }
-                if (command instanceof PluginCommand && c.isAssignableFrom(((PluginCommand) command).getExecutor().getClass())) {
-                    HelpTopic t = topicFactoryMap.get(c).createTopic(command);
+                if (command instanceof PluginCommand && entry.getKey().isAssignableFrom(((PluginCommand) command).getExecutor().getClass())) {
+                    HelpTopic t = entry.getValue().createTopic(command);
                     if (t != null) addCommandTopic(t);
                     continue outer;
                 }
