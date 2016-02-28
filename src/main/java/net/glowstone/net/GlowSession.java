@@ -326,7 +326,7 @@ public final class GlowSession extends BasicSession {
         player.join(this, reader);
 
         // Kick other players with the same UUID
-        for (GlowPlayer other : getServer().getRawOnlinePlayers()) {
+        for (GlowPlayer other : server.getRawOnlinePlayers()) {
             if (other != player && other.getUniqueId().equals(player.getUniqueId())) {
                 other.getSession().disconnect("You logged in from another location.", true);
                 break;

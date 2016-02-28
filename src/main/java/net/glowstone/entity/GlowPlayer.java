@@ -862,7 +862,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
      * @param updateMessage The message to send.
      */
     private void updateUserListEntries(UserListItemMessage updateMessage) {
-        server.getRawOnlinePlayers().stream().filter(player -> player.canSee(this)).forEach(player -> player.getSession().send(updateMessage));
+        server.getRawOnlinePlayers().stream().filter(player -> player.canSee(this)).forEach(player -> {
+            player.session.send(updateMessage);
+        });
     }
 
     @Override
@@ -1289,14 +1291,14 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
 
     @Override
     public void giveExpLevels(int amount) {
-        setLevel(getLevel() + amount);
+        setLevel(level + amount);
     }
 
     ////////////////////////////////////////////////////////////////////////////
     // Health and food handling
 
     private void sendExperience() {
-        session.send(new ExperienceMessage(getExp(), getLevel(), getTotalExperience()));
+        session.send(new ExperienceMessage(experience, level, totalExperience));
     }
 
     @Override
@@ -1420,8 +1422,8 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
     // Actions
 
     private void sendHealth() {
-        float finalHealth = (float) (getHealth() / getMaxHealth() * getHealthScale());
-        session.send(new HealthMessage(finalHealth, getFoodLevel(), getSaturation()));
+        float finalHealth = (float) (getHealth() / getMaxHealth() * healthScale);
+        session.send(new HealthMessage(finalHealth, food, saturation));
     }
 
     /**
@@ -1530,9 +1532,11 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
         sleeping = true;
         setRawLocation(head.getLocation(), false);
 
-        getSession().send(new UseBedMessage(SELF_ID, head.getX(), head.getY(), head.getZ()));
+        session.send(new UseBedMessage(SELF_ID, head.getX(), head.getY(), head.getZ()));
         UseBedMessage msg = new UseBedMessage(getEntityId(), head.getX(), head.getY(), head.getZ());
-        world.getRawPlayers().stream().filter(p -> p != this && p.canSeeEntity(this)).forEach(p -> p.getSession().send(msg));
+        world.getRawPlayers().stream().filter(p -> p != this && p.canSeeEntity(this)).forEach(p -> {
+            p.session.send(msg);
+        });
     }
 
     /**
@@ -1569,9 +1573,11 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
         // Call event
         EventFactory.callEvent(new PlayerBedLeaveEvent(this, head));
 
-        getSession().send(new AnimateEntityMessage(SELF_ID, AnimateEntityMessage.OUT_LEAVE_BED));
+        session.send(new AnimateEntityMessage(SELF_ID, AnimateEntityMessage.OUT_LEAVE_BED));
         AnimateEntityMessage msg = new AnimateEntityMessage(getEntityId(), AnimateEntityMessage.OUT_LEAVE_BED);
-        world.getRawPlayers().stream().filter(p -> p != this && p.canSeeEntity(this)).forEach(p -> p.getSession().send(msg));
+        world.getRawPlayers().stream().filter(p -> p != this && p.canSeeEntity(this)).forEach(p -> {
+            p.session.send(msg);
+        });
     }
 
     @Override

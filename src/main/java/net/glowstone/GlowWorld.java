@@ -283,7 +283,7 @@ public final class GlowWorld implements World {
         try {
             structures = storageProvider.getStructureDataService().readStructuresData();
         } catch (IOException e) {
-            server.getLogger().log(Level.SEVERE, "Error reading structure data for world " + getName(), e);
+            server.getLogger().log(Level.SEVERE, "Error reading structure data for world " + name, e);
         }
 
         server.addWorld(this);
@@ -489,7 +489,7 @@ public final class GlowWorld implements World {
         if (!players.isEmpty()) {
             // If the night is over, wake up all players
             // Tick values for day/night time taken from the minecraft wiki
-            if (getTime() < 12541 || getTime() > 23458) {
+            if (time < 12541 || time > 23458) {
                 wakeUpAllPlayers(players);
                 // no need to send them the time - handle that normally
             } else { // otherwise check whether everyone is asleep
@@ -554,12 +554,12 @@ public final class GlowWorld implements World {
         // target block up to the world height
         final BoundingBox searchBox = BoundingBox.fromPositionAndSize(new Vector(x, y, z), new Vector(0, 0, 0));
         final Vector vec = new Vector(3, 3, 3);
-        final Vector vec2 = new Vector(0, getMaxHeight(), 0);
+        final Vector vec2 = new Vector(0, maxBuildHeight, 0);
         searchBox.minCorner.subtract(vec);
         searchBox.maxCorner.add(vec).add(vec2);
         final List<LivingEntity> livingEntities = new LinkedList<>();
         // make sure entity can see sky
-        getEntityManager().getEntitiesInside(searchBox, null).stream().filter(entity -> entity instanceof LivingEntity && !entity.isDead()).forEach(entity -> {
+        entities.getEntitiesInside(searchBox, null).stream().filter(entity -> entity instanceof LivingEntity && !entity.isDead()).forEach(entity -> {
             final Vector pos = entity.getLocation().toVector();
             int minY = getHighestBlockYAt(pos.getBlockX(), pos.getBlockZ());
             if (pos.getBlockY() >= minY) {
@@ -736,7 +736,7 @@ public final class GlowWorld implements World {
                     for (int z = centerZ - radius; z <= centerZ + radius; ++z) {
                         ++current;
                         if (populateAnchoredChunks) {
-                            getChunkManager().forcePopulation(x, z);
+                            chunks.forcePopulation(x, z);
                         } else {
                             loadChunk(x, z);
                         }
@@ -1337,9 +1337,9 @@ public final class GlowWorld implements World {
 
         // Numbers borrowed from CraftBukkit.
         if (currentlyRaining) {
-            setWeatherDuration(random.nextInt(HALF_DAY_IN_TICKS) + HALF_DAY_IN_TICKS);
+            rainingTicks = random.nextInt(HALF_DAY_IN_TICKS) + HALF_DAY_IN_TICKS;
         } else {
-            setWeatherDuration(random.nextInt(WEEK_IN_TICKS) + HALF_DAY_IN_TICKS);
+            rainingTicks = random.nextInt(WEEK_IN_TICKS) + HALF_DAY_IN_TICKS;
         }
 
         // update players
@@ -1376,9 +1376,9 @@ public final class GlowWorld implements World {
 
         // Numbers borrowed from CraftBukkit.
         if (currentlyThundering) {
-            setThunderDuration(random.nextInt(HALF_DAY_IN_TICKS) + (180 * TICKS_PER_SECOND));
+            thunderingTicks = random.nextInt(HALF_DAY_IN_TICKS) + (180 * TICKS_PER_SECOND);
         } else {
-            setThunderDuration(random.nextInt(WEEK_IN_TICKS) + HALF_DAY_IN_TICKS);
+            thunderingTicks = random.nextInt(WEEK_IN_TICKS) + HALF_DAY_IN_TICKS;
         }
     }
 
@@ -1541,14 +1541,14 @@ public final class GlowWorld implements World {
                 storageProvider.getMetadataService().writeWorldData();
                 storageProvider.getScoreboardIoService().save();
             } catch (IOException e) {
-                server.getLogger().severe("Could not save metadata for world: " + getName());
+                server.getLogger().severe("Could not save metadata for world: " + name);
                 e.printStackTrace();
             }
 
             try {
                 storageProvider.getStructureDataService().writeStructuresData(structures);
             } catch (IOException e) {
-                server.getLogger().severe("Could not save structures data for world: " + getName());
+                server.getLogger().severe("Could not save structures data for world: " + name);
                 e.printStackTrace();
             }
         });
@@ -1728,7 +1728,7 @@ public final class GlowWorld implements World {
 
     @Override
     public int hashCode() {
-        return getUID().hashCode();
+        return uid.hashCode();
     }
 
     @Override

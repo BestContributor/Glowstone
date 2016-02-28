@@ -39,7 +39,7 @@ public class GlowChicken extends GlowAnimal implements Chicken {
 
     private void generateEggLayDelay() {
         Random r = new Random();
-        setEggLayTime(r.nextInt(20 * 60 * 5) + 20 * 60 * 5);
+        this.eggLayTime = r.nextInt(20 * 60 * 5) + 20 * 60 * 5;
     }
 
     @Override

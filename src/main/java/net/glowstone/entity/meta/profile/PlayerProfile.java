@@ -50,7 +50,8 @@ public final class PlayerProfile {
 
         if (null == name) {
             PlayerProfile profile = ProfileCache.getProfile(uuid);
-            name = profile != null ? profile.getName() : null;
+            String result;
+            name = profile != null ? result : null;
         }
 
         this.name = name;

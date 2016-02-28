@@ -35,7 +35,7 @@ public class GlowRabbit extends GlowAnimal implements Rabbit {
     @Override
     public void setRabbitType(Rabbit.Type type) {
         Validate.notNull(type, "Cannot set a null rabbit type!");
-        metadata.set(MetadataIndex.RABBIT_TYPE, rabbitTypeIntegerMap.get(this.getRabbitType()).byteValue());
+        metadata.set(MetadataIndex.RABBIT_TYPE, rabbitTypeIntegerMap.get(rabbitType).byteValue());
         this.rabbitType = type;
     }
 }

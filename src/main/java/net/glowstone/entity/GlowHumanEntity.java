@@ -307,12 +307,12 @@ public abstract class GlowHumanEntity extends GlowLivingEntity implements HumanE
 
     @Override
     public ItemStack getItemInHand() {
-        return getInventory().getItemInHand();
+        return inventory.getItemInHand();
     }
 
     @Override
     public void setItemInHand(ItemStack item) {
-        getInventory().setItemInHand(item);
+        inventory.setItemInHand(item);
     }
 
     @Override
@@ -386,9 +386,9 @@ public abstract class GlowHumanEntity extends GlowLivingEntity implements HumanE
     @Override
     public void closeInventory() {
         EventFactory.callEvent(new InventoryCloseEvent(inventoryView));
-        if (getGameMode() != GameMode.CREATIVE) {
-            if (getItemOnCursor() != null) {
-                drop(getItemOnCursor());
+        if (gameMode != GameMode.CREATIVE) {
+            if (itemOnCursor != null) {
+                drop(itemOnCursor);
             }
             dropUnusedInputs();
         }
@@ -399,14 +399,14 @@ public abstract class GlowHumanEntity extends GlowLivingEntity implements HumanE
     // Drop items left in crafting area.
     private void dropUnusedInputs() {
         for (int i = 0; i < getTopInventory().getSlots().size(); i++) {
-            final ItemStack itemStack = getOpenInventory().getItem(i);
+            final ItemStack itemStack = inventoryView.getItem(i);
             if (itemStack == null || itemStack.getAmount() == 0 || itemStack.getType() == Material.AIR) {
                 continue;
             }
 
             if (isDroppableCraftingSlot(i)) {
                 drop(itemStack);
-                getOpenInventory().setItem(i, null);
+                inventoryView.setItem(i, null);
             }
         }
     }
@@ -426,7 +426,7 @@ public abstract class GlowHumanEntity extends GlowLivingEntity implements HumanE
     }
 
     private GlowInventory getTopInventory() {
-        return (GlowInventory) getOpenInventory().getTopInventory();
+        return (GlowInventory) inventoryView.getTopInventory();
     }
 
     private void resetInventoryView() {

@@ -90,7 +90,7 @@ public final class GlowBlock implements Block {
 
     @Override
     public Location getLocation() {
-        return new Location(getWorld(), x, y, z);
+        return new Location(world, x, y, z);
     }
 
     @Override
@@ -98,7 +98,7 @@ public final class GlowBlock implements Block {
         if (loc == null) {
             return null;
         }
-        loc.setWorld(getWorld());
+        loc.setWorld(world);
         loc.setX(x);
         loc.setY(y);
         loc.setZ(z);
@@ -123,22 +123,22 @@ public final class GlowBlock implements Block {
 
     @Override
     public Biome getBiome() {
-        return getWorld().getBiome(x, z);
+        return world.getBiome(x, z);
     }
 
     @Override
     public void setBiome(Biome bio) {
-        getWorld().setBiome(x, z, bio);
+        world.setBiome(x, z, bio);
     }
 
     @Override
     public double getTemperature() {
-        return getWorld().getTemperature(x, z);
+        return world.getTemperature(x, z);
     }
 
     @Override
     public double getHumidity() {
-        return getWorld().getHumidity(x, z);
+        return world.getHumidity(x, z);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -157,7 +157,7 @@ public final class GlowBlock implements Block {
 
     @Override
     public GlowBlock getRelative(int modX, int modY, int modZ) {
-        return getWorld().getBlockAt(x + modX, y + modY, z + modZ);
+        return world.getBlockAt(x + modX, y + modY, z + modZ);
     }
 
     @Override
@@ -225,7 +225,7 @@ public final class GlowBlock implements Block {
             ((GlowChunk) world.getChunkAt(this)).setType(x & 0xf, z & 0xf, y + 1, 0);
             ((GlowChunk) world.getChunkAt(this)).setMetaData(x & 0xf, z & 0xf, y, 0);
             BlockChangeMessage bcmsg = new BlockChangeMessage(x, y + 1, z, 0, 0);
-            for (GlowPlayer p : getWorld().getRawPlayers()) {
+            for (GlowPlayer p : world.getRawPlayers()) {
                 p.sendBlockChange(bcmsg);
             }
         }
@@ -235,7 +235,7 @@ public final class GlowBlock implements Block {
         }
 
         BlockChangeMessage bcmsg = new BlockChangeMessage(x, y, z, type, data);
-        for (GlowPlayer p : getWorld().getRawPlayers()) {
+        for (GlowPlayer p : world.getRawPlayers()) {
             p.sendBlockChange(bcmsg);
         }
 
@@ -291,7 +291,7 @@ public final class GlowBlock implements Block {
             applyPhysics(getType(), getTypeId(), oldData, data);
         }
         BlockChangeMessage bcmsg = new BlockChangeMessage(x, y, z, getTypeId(), data);
-        for (GlowPlayer p : getWorld().getRawPlayers()) {
+        for (GlowPlayer p : world.getRawPlayers()) {
             p.sendBlockChange(bcmsg);
         }
     }
@@ -445,7 +445,9 @@ public final class GlowBlock implements Block {
 
         Location location = getLocation();
         Collection<ItemStack> toDrop = ItemTable.instance().getBlock(getType()).getMinedDrops(this);
-        toDrop.stream().filter(stack -> r.nextFloat() < yield).forEach(stack -> getWorld().dropItemNaturally(location, stack));
+        toDrop.stream().filter(stack -> r.nextFloat() < yield).forEach(stack -> {
+            world.dropItemNaturally(location, stack);
+        });
 
         setType(Material.AIR);
         return true;
@@ -557,7 +559,7 @@ public final class GlowBlock implements Block {
             }
         }
 
-        long time = getWorld().getFullTime();
+        long time = world.getFullTime();
         gameTicks.add(time + timeout);
 
         counterMap.put(target, gameTicks);
@@ -574,7 +576,7 @@ public final class GlowBlock implements Block {
             }
         }
 
-        long time = getWorld().getFullTime();
+        long time = world.getFullTime();
 
         for (Iterator<Long> it = gameTicks.iterator(); it.hasNext(); ) {
             long rate = it.next();
@@ -589,7 +591,7 @@ public final class GlowBlock implements Block {
 
     @Override
     public int hashCode() {
-        return this.y << 24 ^ this.x ^ this.z ^ getWorld().hashCode();
+        return this.y << 24 ^ this.x ^ this.z ^ world.hashCode();
     }
 
     public boolean equals(Object obj) {
@@ -597,7 +599,7 @@ public final class GlowBlock implements Block {
             return false;
         }
         GlowBlock other = (GlowBlock) obj;
-        return this.x == other.x && this.y == other.y && this.z == other.z && getWorld().equals(other.getWorld());
+        return this.x == other.x && this.y == other.y && this.z == other.z && world.equals(other.world);
     }
 
     /**

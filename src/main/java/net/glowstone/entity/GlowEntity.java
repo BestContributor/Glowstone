@@ -347,7 +347,7 @@ public abstract class GlowEntity implements Entity {
     public boolean isWithinDistance(Location loc) {
         double dx = Math.abs(location.getX() - loc.getX());
         double dz = Math.abs(location.getZ() - loc.getZ());
-        return loc.getWorld() == getWorld() && dx <= (server.getViewDistance() * GlowChunk.WIDTH) && dz <= (server.getViewDistance() * GlowChunk.HEIGHT);
+        return loc.getWorld() == world && dx <= (server.getViewDistance() * GlowChunk.WIDTH) && dz <= (server.getViewDistance() * GlowChunk.HEIGHT);
     }
 
     /**
@@ -387,7 +387,7 @@ public abstract class GlowEntity implements Entity {
                 if (server.getAllowEnd()) {
                     Location previousLocation = location.clone();
                     boolean success;
-                    if (getWorld().getEnvironment() == World.Environment.THE_END) {
+                    if (world.getEnvironment() == World.Environment.THE_END) {
                         success = teleportToSpawn();
                     } else {
                         success = teleportToEnd();
@@ -539,7 +539,7 @@ public abstract class GlowEntity implements Entity {
 
         if (vehicleChanged) {
             //this method will not call for this player, we don't need check SELF_ID
-            result.add(new AttachEntityMessage(getEntityId(), vehicle != null ? vehicle.getEntityId() : -1, false));
+            result.add(new AttachEntityMessage(id, vehicle != null ? vehicle.id : -1, false));
         }
 
         return result;

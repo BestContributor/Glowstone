@@ -92,7 +92,7 @@ public class GlowNoteBlock extends GlowBlockState implements NoteBlock {
 
     @Override
     public boolean play() {
-        return play(instrumentOf(getBlock().getRelative(BlockFace.DOWN).getType()), getNote());
+        return play(instrumentOf(getBlock().getRelative(BlockFace.DOWN).getType()), note);
     }
 
     @Override

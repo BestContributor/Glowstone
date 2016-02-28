@@ -333,7 +333,7 @@ public class BlockType extends ItemType {
         }
 
         // play a sound effect
-        getPlaceSound().play(target.getLocation());
+        placeSound.play(target.getLocation());
 
         // do any after-place actions
         afterPlace(player, target, holding, oldState);

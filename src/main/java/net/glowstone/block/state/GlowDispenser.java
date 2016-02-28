@@ -61,7 +61,7 @@ public class GlowDispenser extends GlowBlockState implements Dispenser, BlockPro
 
         ItemStack origItems = getInventory().getItem(dispenseSlot);
 
-        DispenseBehavior behavior = getDispenseBehaviorRegistry().getBehavior(origItems.getType());
+        DispenseBehavior behavior = dispenseBehaviorRegistry.getBehavior(origItems.getType());
         ItemStack result = behavior.dispense(block, origItems);
         getInventory().setItem(dispenseSlot, result);
         return true;

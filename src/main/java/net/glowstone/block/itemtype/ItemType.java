@@ -54,7 +54,7 @@ public class ItemType {
      * @return The corresponding Material.
      */
     public final Material getMaterial() {
-        return Material.getMaterial(getId());
+        return Material.getMaterial(id);
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -142,6 +142,6 @@ public class ItemType {
 
     @Override
     public final String toString() {
-        return getClass().getSimpleName() + "{" + getId() + " -> " + getMaterial() + "}";
+        return getClass().getSimpleName() + "{" + id + " -> " + getMaterial() + "}";
     }
 }

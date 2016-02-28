@@ -27,8 +27,8 @@ public class GroundGenerator {
     private MaterialData groundMaterial;
 
     public GroundGenerator() {
-        setTopMaterial(GRASS);
-        setGroundMaterial(DIRT);
+        this.topMaterial = GRASS;
+        this.groundMaterial = DIRT;
     }
 
     public void generateTerrainColumn(ChunkData chunkData, World world, Random random, int x, int z, Biome biome, double surfaceNoise) {

@@ -562,12 +562,12 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
 
     @Override
     public int _INVALID_getLastDamage() {
-        return (int) getLastDamage();
+        return (int) lastDamage;
     }
 
     @Override
     public void _INVALID_setLastDamage(int damage) {
-        setLastDamage(damage);
+        lastDamage = (double) damage;
     }
 
     @Override
@@ -587,7 +587,7 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
 
     @Override
     public int _INVALID_getHealth() {
-        return (int) getHealth();
+        return (int) health;
     }
 
     @Override
