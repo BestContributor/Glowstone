@@ -60,7 +60,7 @@ public class TheEndGenerator extends GlowChunkGenerator {
     }
 
     private ChunkData generateRawTerrain(World world, int chunkX, int chunkZ) {
-        generateTerrainDensity(world, chunkX * 2, chunkZ * 2);
+        generateTerrainDensity(world, chunkX << 1, chunkZ << 1);
 
         final ChunkData chunkData = createChunkData(world);
 

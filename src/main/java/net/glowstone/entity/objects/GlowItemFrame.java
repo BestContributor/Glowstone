@@ -186,7 +186,7 @@ public final class GlowItemFrame extends GlowEntity implements ItemFrame {
                 break;
         }
 
-        return Arrays.asList((new SpawnObjectMessage(id, 71, ((location.getBlockX() + xoffset) * 32), ((location.getBlockY() * 32)), ((location.getBlockZ() + zoffset) * 32), 0, yaw, getFacingNumber(face), 0, 0, 0)), new EntityMetadataMessage(id, metadata.getEntryList()));
+        return Arrays.asList((new SpawnObjectMessage(id, 71, ((location.getBlockX() + xoffset) << 5), ((location.getBlockY() << 5)), ((location.getBlockZ() + zoffset) << 5), 0, yaw, getFacingNumber(face), 0, 0, 0)), new EntityMetadataMessage(id, metadata.getEntryList()));
     }
 
     @Override

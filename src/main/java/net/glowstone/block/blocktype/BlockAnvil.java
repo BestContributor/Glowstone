@@ -35,7 +35,7 @@ public class BlockAnvil extends BlockFalling {
 
     @Override
     public Collection<ItemStack> getMinedDrops(GlowBlock block) {
-        ItemStack drop = new ItemStack(Material.ANVIL, 1, (short) (block.getData() / 4));
+        ItemStack drop = new ItemStack(Material.ANVIL, 1, (short) (block.getData() >> 2));
         return Arrays.asList(drop);
     }
 }

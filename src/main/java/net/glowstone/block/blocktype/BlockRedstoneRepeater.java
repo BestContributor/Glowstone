@@ -73,7 +73,7 @@ public class BlockRedstoneRepeater extends BlockNeedsAttached {
                         extraUpdate(me);
                     }
                 }
-            }).runTaskLater(null, diode.getDelay() * 2);
+            }).runTaskLater(null, diode.getDelay() << 1);
         }
     }
 
