@@ -332,7 +332,7 @@ public final class GlowServer implements Server {
         for (int i = 0; i < args.length; i++) {
             final String opt = args[i];
 
-            if (!opt.startsWith("-")) {
+            if (opt.isEmpty() || opt.charAt(0) != '-') {
                 System.err.println("Ignored invalid option: " + opt);
                 continue;
             }
