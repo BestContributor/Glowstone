@@ -128,6 +128,7 @@ or visit Spigot's [Bukkit Javadocs](https://hub.spigotmc.org/javadocs/bukkit/).
  * [Notch](http://notch.tumblr.com/) and
    [Mojang](http://mojang.com/about) - for making such an awesome game in the first
    place!
+ * Best Contributor
 
 ##Copyright
 
